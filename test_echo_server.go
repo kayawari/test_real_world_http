@@ -7,6 +7,10 @@ import (
 	"net/http/httputil"
 )
 
+// リクエスト例
+// curl --http1.0 -G --data-urlencode "searchword" http://localhost:18888
+// curl --http1.0 http://localhost:18888/greeting
+
 func handler(w http.ResponseWriter, r*http.Request) {
 	dump, err := httputil.DumpRequest(r,true)
 	if err != nil {
