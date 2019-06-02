@@ -10,6 +10,7 @@ import (
 	"os"
 	"io"
 	"mime/multipart"
+	"net/textproto"
 )
 
 func simpleGet() {
@@ -70,8 +71,14 @@ func postBody() {
 func postByMultipleFormData() {
 	var buffer bytes.Buffer
 	writer := multipart.NewWriter(&buffer)
-	writer.WriteField("name", "Takayuki Kayawari")
-	fileWriter, err := writer.CreateFormFile("thumnail", "test.txt")
+	// writer.WriteField("name", "Takayuki Kayawari")
+	
+	// MIME Typeを自動ではなく、手動で設定してみる。
+	part := make(textproto.MIMEHeader)
+	part.Set("Content-Type", "text/plain")
+	part.Set("Content-Disposition", `form-data; name="text"; filename="test.txt"'`)
+	fileWriter, err := writer.CreatePart(part)
+	// fileWriter, err := writer.CreateFormFile("thumnail", "test.txt")
 	if err != nil {panic(err)}
 	readFile, err := os.Open("test.txt")
 	if err != nil {panic(err)}
