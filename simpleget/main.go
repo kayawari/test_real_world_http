@@ -55,7 +55,7 @@ func getByForm() {
 	log.Println("status:", resp.Status)
 }
 
-func postByMultipleForm() {
+func postBody() {
 	reader := strings.NewReader("(=^^=)(=^^=)(=^^=)")
 	resp, err := http.Post("http://localhost:18888", "text/plain", reader)
 	if err != nil {panic(err)}
@@ -72,5 +72,5 @@ func main () {
 	log.Println("=====================")
 	getByForm()
 	log.Println("=====================")
-	postByMultipleForm()
+	postBody()
 }
