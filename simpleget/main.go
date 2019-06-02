@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/url"
+	"os"
 )
 
 func simpleGet() {
@@ -54,6 +55,15 @@ func getByForm() {
 	log.Println("status:", resp.Status)
 }
 
+func postByMultipleForm() {
+	file, err := os.Open("main.go")
+	if err != nil {panic(err)}
+	resp, err := http.Post("http://localhost:18888", "text/plain", file)
+	if err != nil {panic(err)}
+	log.Println("status:", resp.Status)
+	log.Println("contentn_length:", resp.ContentLength)
+}
+
 func main () {
 	simpleGet()
 	log.Println("=====================")
@@ -62,4 +72,6 @@ func main () {
 	simpleHead()
 	log.Println("=====================")
 	getByForm()
+	log.Println("=====================")
+	postByMultipleForm()
 }
