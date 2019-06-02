@@ -36,11 +36,22 @@ func getWithQuery() {
 
 func simpleHead() {
 	resp, err := http.Head("http://localhost:18888")
-	if err != nil {
-		panic(err)
-	}
+	if err != nil {panic(err)}
 	log.Println("status:", resp.Status)
 	log.Println("status_code:", resp.StatusCode)
+}
+
+// x-www-form-urlencodedによるフォーム送信
+func getByForm() {
+	values := url.Values {
+		"test": {"value"},
+		"test2": {"value2"},
+		"test3": {"value3=&=&"},
+		// &とか=もRFC1866形式でエンコードしてくれる。
+	}
+	resp, err := http.PostForm("http://localhost:18888", values)
+	if err != nil {panic(err)}
+	log.Println("status:", resp.Status)
 }
 
 func main () {
@@ -49,4 +60,6 @@ func main () {
 	getWithQuery()
 	log.Println("=====================")
 	simpleHead()
+	log.Println("=====================")
+	getByForm()
 }
