@@ -71,9 +71,9 @@ func postByMultipleFormData() {
 	var buffer bytes.Buffer
 	writer := multipart.NewWriter(&buffer)
 	writer.WriteField("name", "Takayuki Kayawari")
-	fileWriter, err := writer.CreateFormFile("thumnail", "photo.jpg")
+	fileWriter, err := writer.CreateFormFile("thumnail", "test.txt")
 	if err != nil {panic(err)}
-	readFile, err := os.Open("photo.jpg")
+	readFile, err := os.Open("test.txt")
 	if err != nil {panic(err)}
 	defer readFile.Close()
 	io.Copy(fileWriter, readFile)
