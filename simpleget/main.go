@@ -16,7 +16,9 @@ func main () {
 	if err != nil {
 		panic(err)
 	}
-	log.Println(string(body))
 	log.Println("status:", resp.Status)
 	log.Println("status_code", resp.StatusCode)
+	log.Println("headers:", resp.Header)
+	log.Println("body:", string(body))
+	log.Println("Content-Length", resp.Header.Get("Content-Length"))
 }
