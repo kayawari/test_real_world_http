@@ -6,6 +6,10 @@ import (
 	"log"
 	"net/url"
 	"strings"
+	"bytes"
+	"os"
+	"io"
+	"mime/multipart"
 )
 
 func simpleGet() {
@@ -63,6 +67,23 @@ func postBody() {
 	log.Println("contentn_length:", resp.ContentLength)
 }
 
+func postByMultipleFormData() {
+	var buffer bytes.Buffer
+	writer := multipart.NewWriter(&buffer)
+	writer.WriteField("name", "Takayuki Kayawari")
+	fileWriter, err := writer.CreateFormFile("thumnail", "photo.jpg")
+	if err != nil {panic(err)}
+	readFile, err := os.Open("photo.jpg")
+	if err != nil {panic(err)}
+	defer readFile.Close()
+	io.Copy(fileWriter, readFile)
+	writer.Close()
+	
+	resp, err := http.Post("http://localhost:18888", writer.FormDataContentType(), &buffer)
+	if err != nil {panic(err)}
+	log.Println("status:", resp.Status)
+}
+
 func main () {
 	simpleGet()
 	log.Println("=====================")
@@ -73,4 +94,6 @@ func main () {
 	getByForm()
 	log.Println("=====================")
 	postBody()
+	log.Println("=====================")
+	postByMultipleFormData()
 }
