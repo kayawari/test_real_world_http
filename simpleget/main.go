@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/url"
-	"os"
+	"strings"
 )
 
 func simpleGet() {
@@ -56,9 +56,8 @@ func getByForm() {
 }
 
 func postByMultipleForm() {
-	file, err := os.Open("main.go")
-	if err != nil {panic(err)}
-	resp, err := http.Post("http://localhost:18888", "text/plain", file)
+	reader := strings.NewReader("(=^^=)(=^^=)(=^^=)")
+	resp, err := http.Post("http://localhost:18888", "text/plain", reader)
 	if err != nil {panic(err)}
 	log.Println("status:", resp.Status)
 	log.Println("contentn_length:", resp.ContentLength)
