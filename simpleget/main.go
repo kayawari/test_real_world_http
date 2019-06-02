@@ -34,8 +34,19 @@ func getWithQuery() {
 	log.Println(string(body))
 }
 
+func simpleHead() {
+	resp, err := http.Head("http://localhost:18888")
+	if err != nil {
+		panic(err)
+	}
+	log.Println("status:", resp.Status)
+	log.Println("status_code:", resp.StatusCode)
+}
+
 func main () {
 	simpleGet()
 	log.Println("=====================")
 	getWithQuery()
+	log.Println("=====================")
+	simpleHead()
 }
